@@ -1,0 +1,35 @@
+text = input("Введите текст: ")
+
+up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+low = "abcdefghijklmnopqrstuvwxyz"
+
+k = 0
+counter = 0
+for ch in text:
+    if ch in up or ch in low:
+        counter += 1
+    else:
+        if counter > k:
+            k = counter
+        counter = 0
+if counter > k:
+    k = counter
+
+result_parts = []
+for ch in text:
+    if ch in up or ch in low:
+        if ch == ch.upper():
+            alphabet = up
+        else:
+            alphabet = low
+        j = 0
+        while alphabet[j] != ch:
+            j += 1
+        # сдвигаем и добавляем в результат
+        result_parts.append(alphabet[(j + k) % 26])
+    else:
+        result_parts.append(ch)
+
+result = "".join(result_parts)
+print("Зашифрованный текст: ", result)
+print("Число k: ", k)

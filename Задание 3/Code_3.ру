@@ -1,0 +1,40 @@
+text = input("Введите текст: ").lower()
+
+alphabet_en = "abcdefghijklmnopqrstuvwxyz"
+alphabet_ru = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+
+words = []
+word_parts = []
+
+for ch in text:
+    if ch in alphabet_en or ch in alphabet_ru:
+        word_parts.append(ch)
+    else:
+        if word_parts:
+            words.append("".join(word_parts))
+            word_parts = []
+
+if word_parts:
+    words.append("".join(word_parts))
+
+counts = {}
+for w in words:
+    if w in counts:
+        counts[w] += 1
+    else:
+        counts[w] = 1
+
+items = list(counts.items())
+n = len(items)
+for a in range(n):
+    for b in range(n - 1 - a):
+        if items[b][1] < items[b + 1][1]:
+            items[b], items[b + 1] = items[b + 1], items[b]
+
+print("Топ-5 самых частых слов:")
+limit = 5
+if len(items) < 5:
+    limit = len(items)
+
+for idx in range(limit):
+    print(items[idx][0], "-", items[idx][1])
